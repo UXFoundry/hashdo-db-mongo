@@ -3,10 +3,28 @@
 This is a database implementation plugin for persisting [\#Do](https://github.com/UXFoundry/hashdo) card state to [MongoDB](https://www.mongodb.org/) .
 
 ## Getting Started
-TODO
+To make use of MongoDB for state in a [\#Do](https://github.com/UXFoundry/hashdo) project, you simply replace the built-in `db` object property with this implementation.
+
+```js
+var hashdo = require('hashdo');
+
+// Use the MongoDB database plugin.
+hashdo.db = require('hashdo-db-mongo');
+
+// Using the hashdo-web project?
+var hashdoweb = require('hashdo-web');
+
+hashdoweb.hashdo.db = require('hashdo-db-mongo');
+```
 
 ## MongoDB
-A local or remote instance of [MongoDB](https://www.mongodb.org/) is required. When connecting to the database, provide the appropriate connection string. If no connection string is provided, the it will try to connect to `mongodb://localhost/hashdo`
+A local or remote instance of [MongoDB](https://www.mongodb.org/) is required.
+
+## Environment Variables
+To use a custom database connection, you will need to set the following environment variable.
+
+#### `MONGO`
+This variable is optional, if a value is not set then a connection to `mongodb://localhost/hashdo` will be attempted.
 
 ## License
 Copyright 2015 (c). All rights reserved.

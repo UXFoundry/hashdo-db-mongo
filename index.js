@@ -25,15 +25,15 @@ var APIKey = Mongoose.model('APIKey', APIKeySchema),
  * @ignore
  */
 function onError(err) {
-  console.error('DB: Error occurred connecting to database.', err);
+  console.error('DB-MONGO: Error occurred connecting to database.', err);
 }
 
 function onDisconnect() {
-  console.warn('DB: Connection lost, will retry automatically.');
+  console.warn('DB-MONGO: Connection lost, will retry automatically.');
 }
 
 function onReconnect() {
-  console.info('DB: Reconnected successfully.');
+  console.info('DB-MONGO: Reconnected successfully.');
 }
 
 var db = {
@@ -44,9 +44,9 @@ var db = {
    *
    * @method connect
    * @async
-   * @param {Function} [callback]  Optional callback function to determine when the connection has completed and if it was successful.
+   * @param {Function} [callback]          Optional callback function to determine when the connection has completed and if it was successful.
    */
-  connect: function (connectionString, callback) {
+  connect: function (callback) {
     var options = {
       server: {
         /* @ignore */
@@ -60,20 +60,24 @@ var db = {
 
     Mongoose.connection.on('error', onError);
 
-    connectionString = connectionString || 'mongodb://localhost/hashdo';
-    console.log('DB: Connecting to ' + connectionString);
+    if (!process.env.MONGO) {
+      console.warn('MONGO environment variable has not been set, will use localhost.');
+    }
+
+    var connectionString = process.env.MONGO || 'mongodb://localhost/hashdo';
+    console.log('DB-MONGO: Connecting to ' + connectionString);
 
     Mongoose.connect(connectionString, options, function (err) {
       if (!err) {
-        console.log('DB: Successfully connected to the database.');
+        console.log('DB-MONGO: Successfully connected to the database.');
 
         Mongoose.connection.on('reconnected', onReconnect);
         Mongoose.connection.on('disconnected', onDisconnect);
       }
       else {
-        console.log('DB: Could not connect to database.');
+        console.log('DB-MONGO: Could not connect to database.');
       }
-      
+
       callback && callback(err);
     });
   },
@@ -104,9 +108,16 @@ var db = {
    * @param {Function} [callback]  Optional callback function to determine when the data has been saved or failed to save.
    */
   saveCardState: function (cardKey, value, callback) {
-    State.findOneAndUpdate({ cardKey: cardKey }, { value: value, dateTimeStamp: Date.now() }, { upsert: true }, function (err) {
+    State.findOneAndUpdate({
+      cardKey: cardKey
+    }, {
+      value: value,
+      dateTimeStamp: Date.now()
+    }, {
+      upsert: true
+    }, function (err) {
       callback && callback(err);
-    });   
+    });
   },
 
   /**
@@ -136,7 +147,7 @@ var db = {
       }
     });
   },
-  
+
   /**
    * Create an assign a API call key to a specific card.
    * This key will be required to decode and secure parameters.
@@ -164,7 +175,7 @@ var db = {
       }
     });
   },
-  
+
   /**
    * Validate an API key against an existing card.
    *

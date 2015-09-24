@@ -38,7 +38,7 @@ gulp.task('clean', function (cb) {
 gulp.task('docs', function () {
   return gulp.src(JS_LOCATIONS.concat(['README.md']), {base: '.'})
     .pipe(plugins.doxx({
-      title: 'HashDo MongoDB',
+      title: 'HashDo Database (MongoDB)',
       urlPrefix: ''
     }))
     .pipe(gulp.dest(BUILD_PATH + 'docs'));
