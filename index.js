@@ -61,7 +61,7 @@ var db = {
     Mongoose.connection.on('error', onError);
 
     if (!process.env.MONGO) {
-      console.warn('MONGO environment variable has not been set, will use localhost.');
+      console.warn('DB-MONGO: MONGO environment variable has not been set, will use localhost.');
     }
 
     var connectionString = process.env.MONGO || 'mongodb://localhost/hashdo';
