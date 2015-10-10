@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "cuid": "1.3.8",
-    "jsonwebtoken": "5.0.5",
+    "jsonwebtoken": "5.4.0",
     "lodash": "3.10.1",
-    "mongoose": "4.1.9"
+    "mongoose": "4.1.10"
   },
   "devDependencies": {
     "del": "1.2.1",
