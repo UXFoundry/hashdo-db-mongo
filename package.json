@@ -19,10 +19,10 @@
     "cuid": "1.3.8",
     "jsonwebtoken": "5.4.0",
     "lodash": "3.10.1",
-    "mongoose": "4.1.10"
+    "mongoose": "4.1.11"
   },
   "devDependencies": {
-    "del": "1.2.1",
+    "del": "2.0.2",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-bump": "1.0.0",
     "gulp-doxx": "0.0.5",
