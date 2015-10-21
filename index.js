@@ -3,12 +3,14 @@
  *
  * @ignore
  */
-var JWT = require('jsonwebtoken'),
+var Async = require('async'),
+  JWT = require('jsonwebtoken'),
   Cuid = require('cuid'),
   Mongoose = require('mongoose'),
   APIKeySchema = require('./models/apiKey').modelSchema,
   LockSchema = require('./models/lock').modelSchema,
-  StateSchema = require('./models/state').modelSchema;
+  StateSchema = require('./models/state').modelSchema,
+  _ = require('lodash');
 
 /**
  * Models
@@ -108,16 +110,29 @@ var db = {
    * @param {Function} [callback]  Optional callback function to determine when the data has been saved or failed to save.
    */
   saveCardState: function (cardKey, value, callback) {
-    State.findOneAndUpdate({
-      cardKey: cardKey
-    }, {
-      value: value,
-      dateTimeStamp: Date.now()
-    }, {
-      upsert: true
-    }, function (err) {
-      callback && callback(err);
-    });
+    Async.waterfall(
+      [
+        // get card state
+        function (cb) {
+          db.getCardState(cardKey, null, function (err, state) {
+            cb(null, state || {});
+          });
+        },
+
+        // save
+        function (state, cb) {
+          State.findOneAndUpdate({cardKey: cardKey}, {value: _.assign(state, value), dateTimeStamp: Date.now()}, {upsert: true}, function (err) {
+            callback && callback(err);
+          });
+
+          cb(null);
+        }
+      ],
+
+      // done
+      function () {
+        callback && callback(null);
+      });
   },
 
   /**
