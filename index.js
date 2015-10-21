@@ -110,29 +110,22 @@ var db = {
    * @param {Function} [callback]  Optional callback function to determine when the data has been saved or failed to save.
    */
   saveCardState: function (cardKey, value, callback) {
-    Async.waterfall(
-      [
-        // get card state
-        function (cb) {
-          db.getCardState(cardKey, null, function (err, state) {
-            cb(null, state || {});
-          });
-        },
+    Async.waterfall([
+      // get card state
+      function (cb) {
+        db.getCardState(cardKey, null, cb);
+      },
 
-        // save
-        function (state, cb) {
-          State.findOneAndUpdate({cardKey: cardKey}, {value: _.assign(state, value), dateTimeStamp: Date.now()}, {upsert: true}, function (err) {
-            callback && callback(err);
-          });
+      // save
+      function (state, cb) {
+        State.findOneAndUpdate({ cardKey: cardKey }, { value: _.merge(state || {}, value), dateTimeStamp: Date.now() }, { upsert: true }, cb);
+      }
+    ],
 
-          cb(null);
-        }
-      ],
-
-      // done
-      function () {
-        callback && callback(null);
-      });
+    // done
+    function (err) {
+      callback && callback(err);
+    });
   },
 
   /**
