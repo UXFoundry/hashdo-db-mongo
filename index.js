@@ -10,7 +10,7 @@ var Async = require('async'),
   APIKeySchema = require('./models/apiKey').modelSchema,
   LockSchema = require('./models/lock').modelSchema,
   StateSchema = require('./models/state').modelSchema,
-  DeepMerge = require('deepmerge');
+  Deep = require('./lib/deep');
 
 /**
  * Models
@@ -118,7 +118,7 @@ var db = {
 
       // save
       function (state, cb) {
-        State.findOneAndUpdate({ cardKey: cardKey }, { value: DeepMerge(state || {}, value), dateTimeStamp: Date.now() }, { upsert: true }, cb);
+        State.findOneAndUpdate({ cardKey: cardKey }, { value: Deep.extend(true, state || {}, value), dateTimeStamp: Date.now() }, { upsert: true }, cb);
       }
     ],
 
