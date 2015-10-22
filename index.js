@@ -118,7 +118,7 @@ var db = {
 
       // save
       function (state, cb) {
-        State.findOneAndUpdate({ cardKey: cardKey }, { value: Deep.extend(true, state || {}, value), dateTimeStamp: Date.now() }, { upsert: true }, cb);
+        State.findOneAndUpdate({ cardKey: cardKey }, { value: Deep.extend(true, true, state || {}, value), dateTimeStamp: Date.now() }, { upsert: true }, cb);
       }
     ],
 
