@@ -1,7 +1,7 @@
 {
   "name": "hashdo-db-mongo",
   "description": "#Do database implementation to save card state to MongoDB.",
-  "version": "0.2.96",
+  "version": "0.2.97",
   "author": "HashDo <info@hashdo.com>",
   "license": "Apache-2.0",
   "keywords": [
@@ -27,7 +27,7 @@
     "gulp": "gulpjs/gulp#4.0",
     "gulp-bump": "1.0.0",
     "gulp-doxx": "0.0.5",
-    "gulp-jsbeautifier": "2.0.1",
+    "gulp-jsbeautifier": "2.0.2",
     "gulp-jshint": "2.0.0",
     "gulp-load-plugins": "1.2.0",
     "gulp-watch": "4.3.5",
