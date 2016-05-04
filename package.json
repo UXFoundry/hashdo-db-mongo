@@ -1,7 +1,7 @@
 {
   "name": "hashdo-db-mongo",
   "description": "#Do database implementation to save card state to MongoDB.",
-  "version": "0.3.06",
+  "version": "0.3.07",
   "author": "HashDo <info@hashdo.com>",
   "license": "Apache-2.0",
   "keywords": [
@@ -18,9 +18,9 @@
   "dependencies": {
     "async": "1.5.2",
     "cuid": "1.3.8",
-    "jsonwebtoken": "5.7.0",
-    "lodash": "4.11.1",
-    "mongoose": "4.4.13"
+    "jsonwebtoken": "6.2.0",
+    "lodash": "4.11.2",
+    "mongoose": "4.4.14"
   },
   "devDependencies": {
     "del": "2.2.0",
@@ -32,7 +32,7 @@
     "gulp-load-plugins": "1.2.2",
     "gulp-watch": "4.3.5",
     "jshint": "2.9.2",
-    "jshint-stylish": "2.1.0"
+    "jshint-stylish": "2.2.0"
   },
   "engines": {
     "node": ">=0.12.0"
