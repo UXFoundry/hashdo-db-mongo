@@ -33,7 +33,7 @@ function onDisconnect() {
 }
 
 function onReconnect() {
-  console.info('DB-MONGO: Reconnected successfully.');
+
 }
 
 var db = {
